@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="icon">images/cash-flow-icon.png</file>
+    </qresource>
+    <qresource prefix="/styles">
+        <file alias="style">styles/Obit.qss</file>
+    </qresource>
+</RCC>
