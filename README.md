@@ -11,14 +11,14 @@ A lightweight cross-platform desktop application for tracking income and expense
 ## 🖼️ Preview
 ![App screenshot](docs/demo.png)
 
-## 🚀 Technologies
+## 🛠️ Technologies
 - Language: C++
 - Framework: Qt (QtWidgets, QtSql, QtCore)
 - Database: SQLite
 - Build system: CMake
 - Version control: Git
 
-## 🚀 Build and run
+## ⚙️ Build and run
 ```bash
 # Clone the repository
 git clone https://github.com/mikhailshevtsov/CashFlow.git
