@@ -22,17 +22,17 @@ CashFlowReportWidget::CashFlowReportWidget(QWidget* parent, const CashFlowReport
 
     QFormLayout* layout = new QFormLayout;
 
-    layout->addRow(tr("Incomes count"), m_incomesCountLabel);
-    layout->addRow(tr("Minimum income"), m_minimumIncomeLabel);
-    layout->addRow(tr("Maximum income"), m_maximumIncomeLabel);
-    layout->addRow(tr("Total income"), m_totalIncomeLabel);
+    layout->addRow(tr("Incomes count\t"), m_incomesCountLabel);
+    layout->addRow(tr("Minimum income\t"), m_minimumIncomeLabel);
+    layout->addRow(tr("Maximum income\t"), m_maximumIncomeLabel);
+    layout->addRow(tr("Total income\t"), m_totalIncomeLabel);
 
-    layout->addRow(tr("Expenses count"), m_expensesCountLabel);
-    layout->addRow(tr("Minimum expense"), m_minimumExpenseLabel);
-    layout->addRow(tr("Maximum expense"), m_maximumExpenseLabel);
-    layout->addRow(tr("Total expense"), m_totalExpenseLabel);
+    layout->addRow(tr("Expenses count\t"), m_expensesCountLabel);
+    layout->addRow(tr("Minimum expense\t"), m_minimumExpenseLabel);
+    layout->addRow(tr("Maximum expense\t"), m_maximumExpenseLabel);
+    layout->addRow(tr("Total expense\t"), m_totalExpenseLabel);
 
-    layout->addRow(tr("Balance"), m_balanceLabel);
+    layout->addRow(tr("Balance\t"), m_balanceLabel);
 
     setLayout(layout);
 }

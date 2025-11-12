@@ -6,7 +6,7 @@
 #include <QDialog>
 class QRadioButton;
 class QDoubleSpinBox;
-class QLineEdit;
+class QTextEdit;
 
 class CashFlowDialog : public QDialog
 {
@@ -31,7 +31,7 @@ private:
     QRadioButton* m_expenseButton{};
 
     QDoubleSpinBox* m_amountInputWidget{};
-    QLineEdit* m_descriptionInputWidget{};
+    QTextEdit* m_descriptionInputWidget{};
 
     Mode m_mode = Mode::Add;
     CashFlow m_cashFlow;

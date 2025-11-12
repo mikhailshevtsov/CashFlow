@@ -1,14 +1,19 @@
 #include "CashFlowDatabase.hpp"
 
+#include <QStandardPaths>
+#include <QDir>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDate>
 
 CashFlowDatabase::CashFlowDatabase()
 {
+    QString dataBasePath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QDir().mkpath(dataBasePath);
+
     // Opening the connection
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    m_database.setDatabaseName("CashFlow");
+    m_database.setDatabaseName(dataBasePath + "/CashFlow.sqlite");
 
     if (!m_database.open())
     {
@@ -289,17 +294,17 @@ CashFlowReport CashFlowDatabase::getReport() const
     return report;
 }
 
-CashFlowFilter CashFlowDatabase::getFilter() const
+CashFlowFilter CashFlowDatabase::getLimits() const
 {
-    CashFlowFilter filter;
+    CashFlowFilter limits;
 
-    filter.lowerAmountLimit = getMinimum();
-    filter.upperAmountLimit = getMaximum();
+    limits.lowerAmountLimit = getMinimum();
+    limits.upperAmountLimit = getMaximum();
 
-    filter.firstDate = getFirstDate();
-    filter.lastDate = getLastDate();
+    limits.firstDate = getFirstDate();
+    limits.lastDate = getLastDate();
 
-    return filter;
+    return limits;
 }
 
 const QSqlDatabase& CashFlowDatabase::getDatabase() const

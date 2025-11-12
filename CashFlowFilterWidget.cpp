@@ -14,7 +14,9 @@ CashFlowFilterWidget::CashFlowFilterWidget(QWidget* parent, const CashFlowFilter
     m_expenseCheckBox = new QCheckBox(tr("Expense"));
 
     m_lowerAmountLimitSpinBox = new QDoubleSpinBox;
+    m_lowerAmountLimitSpinBox->setDecimals(2);
     m_upperAmountLimitSpinBox = new QDoubleSpinBox;
+    m_upperAmountLimitSpinBox->setDecimals(2);
 
     m_allTimeButton = new QRadioButton(tr("All time"));
     m_todayButton = new QRadioButton(tr("Today"));
@@ -37,6 +39,7 @@ CashFlowFilterWidget::CashFlowFilterWidget(QWidget* parent, const CashFlowFilter
     m_applyButton = new QPushButton(tr("Apply"));
     m_resetButton = new QPushButton(tr("Reset"));
 
+    setLimits(filter);
     setFilter(filter);
 
     QGridLayout* layout = new QGridLayout;
@@ -56,6 +59,9 @@ CashFlowFilterWidget::CashFlowFilterWidget(QWidget* parent, const CashFlowFilter
 
     m_firstDateEdit->setEnabled(false);
     m_lastDateEdit->setEnabled(false);
+
+    connect(m_firstDateEdit, &QDateEdit::dateChanged, m_lastDateEdit, &QDateEdit::setMinimumDate);
+    connect(m_lastDateEdit, &QDateEdit::dateChanged, m_firstDateEdit, &QDateEdit::setMaximumDate);
 
     connect(m_dateButton, &QRadioButton::toggled, m_firstDateEdit, &QDateEdit::setEnabled);
     connect(m_dateButton, &QRadioButton::toggled, m_lastDateEdit, &QDateEdit::setEnabled);
@@ -93,12 +99,16 @@ CashFlowFilterWidget::CashFlowFilterWidget(QWidget* parent, const CashFlowFilter
 
     connect(m_applyButton, &QPushButton::clicked, this, &CashFlowFilterWidget::onApplied);
     connect(m_resetButton, &QPushButton::clicked, this, &CashFlowFilterWidget::onReset);
-    connect(m_resetButton, &QPushButton::clicked, this, &CashFlowFilterWidget::reset);
 }
 
 const CashFlowFilter& CashFlowFilterWidget::filter() const noexcept
 {
     return m_filter;
+}
+
+const CashFlowFilter& CashFlowFilterWidget::limits() const noexcept
+{
+    return m_limits;
 }
 
 void CashFlowFilterWidget::setFilter(const CashFlowFilter& filter)
@@ -109,10 +119,21 @@ void CashFlowFilterWidget::setFilter(const CashFlowFilter& filter)
     m_expenseCheckBox->setChecked(filter.expense);
 
     m_lowerAmountLimitSpinBox->setValue(filter.lowerAmountLimit);
-    m_upperAmountLimitSpinBox->setValue(filter.upperAmountLimit);
+    m_upperAmountLimitSpinBox->setValue(filter.upperAmountLimit + 0.01);
 
     m_firstDateEdit->setDate(filter.firstDate);
     m_lastDateEdit->setDate(filter.lastDate);
+}
+
+void CashFlowFilterWidget::setLimits(const CashFlowFilter& limits)
+{
+    m_limits = limits;
+
+    m_lowerAmountLimitSpinBox->setRange(limits.lowerAmountLimit, limits.upperAmountLimit);
+    m_upperAmountLimitSpinBox->setRange(limits.lowerAmountLimit, limits.upperAmountLimit);
+
+    m_firstDateEdit->setDateRange(limits.firstDate, limits.lastDate);
+    m_lastDateEdit->setDateRange(limits.firstDate, limits.lastDate);
 }
 
 void CashFlowFilterWidget::onApplied()
@@ -132,4 +153,6 @@ void CashFlowFilterWidget::onApplied()
 void CashFlowFilterWidget::onReset()
 {
     m_allTimeButton->setChecked(true);
+
+    emit reset();
 }

@@ -6,7 +6,7 @@
 #include <QButtonGroup>
 #include <QHBoxLayout>
 #include <QDoubleSpinBox>
-#include <QLineEdit>
+#include <QTextEdit>
 #include <QDialogButtonBox>
 
 CashFlowDialog::CashFlowDialog(QWidget* parent, Mode mode, const CashFlow& cashFlow)
@@ -34,7 +34,7 @@ CashFlowDialog::CashFlowDialog(QWidget* parent, Mode mode, const CashFlow& cashF
 
 
     // Setup description input widget
-    m_descriptionInputWidget = new QLineEdit;
+    m_descriptionInputWidget = new QTextEdit;
 
 
     // Setup buttons
@@ -90,5 +90,5 @@ void CashFlowDialog::onAccepted()
 
     m_cashFlow.amount = m_amountInputWidget->value();
 
-    m_cashFlow.description = m_descriptionInputWidget->text();
+    m_cashFlow.description = m_descriptionInputWidget->toPlainText();
 }

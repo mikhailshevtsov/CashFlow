@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="icon">images/cash-flow-icon.png</file>
+        <file alias="check">images/check.png</file>
+        <file alias="arrow_up">images/arrow_up.png</file>
+        <file alias="arrow_down">images/arrow_down.png</file>
+    </qresource>
+    <qresource prefix="/styles">
+        <file alias="style">styles/cash-flow-style.qss</file>
+    </qresource>
+</RCC>

@@ -30,7 +30,7 @@ public:
     qreal getTotal() const;
 
     CashFlowReport getReport() const;
-    CashFlowFilter getFilter() const;
+    CashFlowFilter getLimits() const;
 
     QDate getFirstDate() const;
     QDate getLastDate() const;

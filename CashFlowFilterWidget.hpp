@@ -18,9 +18,11 @@ public:
     CashFlowFilterWidget(QWidget* parent = nullptr, const CashFlowFilter& filter = {});
 
     const CashFlowFilter& filter() const noexcept;
+    const CashFlowFilter& limits() const noexcept;
 
 public slots:
     void setFilter(const CashFlowFilter& filter);
+    void setLimits(const CashFlowFilter& limits);
 
 private slots:
     void onApplied();
@@ -49,6 +51,7 @@ private:
     QPushButton* m_resetButton{};
 
     CashFlowFilter m_filter;
+    CashFlowFilter m_limits;
 };
 
 #endif // CASHFLOWFILTERWIDGET_HPP

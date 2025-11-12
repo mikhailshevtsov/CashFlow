@@ -35,11 +35,12 @@ void CashFlowWindow::setupWindow()
 {
     setWindowTitle("CashFlow");
     setWindowIcon(QIcon(":/images/icon"));
-    resize(1000, 600);
+    resize(1000, 500);
 
-    QFile file(":/styles/style");
-    file.open(QFile::ReadOnly);
-    QString styleSheet = file.readAll();
+    QFile styleSheetFile(":/styles/style");
+    if (!styleSheetFile.open(QFile::ReadOnly | QFile::Text))
+        qDebug() << "Failed to load stylesheet";
+    QString styleSheet = styleSheetFile.readAll();
     setStyleSheet(styleSheet);
     setStyle(QStyleFactory::create("Fusion"));
 }
@@ -90,7 +91,7 @@ void CashFlowWindow::setupReportWidget()
 
 void CashFlowWindow::setupFilterWidget()
 {
-    m_filterWidget = new CashFlowFilterWidget(this, m_database.getFilter());
+    m_filterWidget = new CashFlowFilterWidget(this, m_database.getLimits());
     m_filterWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 }
 
@@ -169,7 +170,9 @@ void CashFlowWindow::acceptDialog()
     }
 
     m_tableModel->submitAll();
+
     m_reportWidget->setReport(m_database.getReport());
+    m_filterWidget->setLimits(m_database.getLimits());
 }
 
 void CashFlowWindow::removeCashFlow()
@@ -181,7 +184,9 @@ void CashFlowWindow::removeCashFlow()
     m_database.removeCashFlow(removedId);
 
     m_tableModel->submitAll();
+
     m_reportWidget->setReport(m_database.getReport());
+    m_filterWidget->setLimits(m_database.getLimits());
 }
 
 void CashFlowWindow::onFilterApplied()
@@ -193,9 +198,10 @@ void CashFlowWindow::onFilterApplied()
 
 void CashFlowWindow::onFilterReset()
 {
-    CashFlowFilter filter = m_database.getFilter();
+    CashFlowFilter limits = m_database.getLimits();
     m_tableModel->setFilter("");
     m_reportWidget->setReport(m_database.getReport());
-    m_filterWidget->setFilter(filter);
+    m_filterWidget->setLimits(limits);
+    m_filterWidget->setFilter(limits);
 }
 

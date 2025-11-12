@@ -14,6 +14,8 @@ struct CashFlowFilter
 
     QDate firstDate;
     QDate lastDate;
+
+    bool operator==(const CashFlowFilter& filter) const noexcept = default;
 };
 
 #endif // CASHFLOWFILTER_HPP
